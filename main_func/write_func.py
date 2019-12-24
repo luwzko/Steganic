@@ -12,7 +12,6 @@ def write_byteediting(image_file, output_string, msg):
         write_y = 0
 
         iter_byte = iter(output_string)
-        print(output_string, len(output_string))
         for bits in iter_byte:
 
             current_color = rgb.getpixel((write_x, write_y))
