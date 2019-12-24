@@ -29,7 +29,7 @@ def banner():
         :::: ::      ::     :: ::::   ::: ::::  ::   :::   ::   ::   ::   ::: :::
         :: : :       :     : :: ::    :: :: :    :   : :  ::    :   :     :: :: :
                                                                                                         {Fore.RESET}
-        \t\t\t{Back.RED}{Fore.BLACK} }}-- Written by akxri --{{ {Back.RESET}{Fore.RESET}
+        \t\t\t{Back.RED}{Fore.BLACK} }}-- Written by luckoGH --{{ {Back.RESET}{Fore.RESET}
         {Fore.LIGHTBLUE_EX}
         !> ;ByteEditing mode writes bits of message to B and G colors
         !> ;Coloredit mode writes color based on bits of message
