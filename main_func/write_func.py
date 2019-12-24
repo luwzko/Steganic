@@ -12,6 +12,7 @@ def write_byteediting(image_file, output_string, msg):
         write_y = 0
 
         iter_byte = iter(output_string)
+        print(output_string, len(output_string))
         for bits in iter_byte:
 
             current_color = rgb.getpixel((write_x, write_y))
@@ -20,17 +21,14 @@ def write_byteediting(image_file, output_string, msg):
             changed_green[-1] = bits
             joined_green = "".join(changed_green)
 
-            changed_blue = list(bin(current_color[2] - 1)[2:])
+            changed_blue = list(bin(current_color[2])[2:])
             changed_blue[-1] = next(iter_byte)
             joined_blue = "".join(changed_blue)
 
-            try:
-                new_color = (current_color[0], int(joined_green, 2), int(joined_blue,2))
-                rgb.putpixel((write_x, write_y), new_color)
-                write_x += 1
-                write_y += 1
-            except:
-                pass
+            new_color = (current_color[0], int(joined_green, 2), int(joined_blue,2))
+            rgb.putpixel((write_x, write_y), new_color)
+            write_x += 1
+            write_y += 1
 
             if write_x >= width:
 
