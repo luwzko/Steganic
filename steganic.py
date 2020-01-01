@@ -71,7 +71,7 @@ def steganic(mode, file, msg):
 
         elif len(msg) >= max_msg_len:
 
-            print(f"{Fore.LIGHTRED_EX} Error, too big message.{Fore.RESET}")
+            print(f"{Fore.LIGHTRED_EX} Error, message length greater than {max_msg_len}.{Fore.RESET}")
             exit(0)
 
     elif mode == "Write;ByteEditing":
@@ -88,7 +88,7 @@ def steganic(mode, file, msg):
 
         elif len(msg) >= max_msg_len:
 
-            print(f"{Fore.LIGHTRED_EX} Error, too big message.{Fore.RESET}")
+            print(f"{Fore.LIGHTRED_EX} Error, message length greater than {max_msg_len}.{Fore.RESET}")
             exit(0)
 
     elif mode == "Read;ByteEditing":
