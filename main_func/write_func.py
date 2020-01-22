@@ -11,6 +11,8 @@ def write_byteediting(image_file, output_string, msg):
         write_x = 0
         write_y = 0
 
+        #writes 2 bits in 1 color : 1bit -> Green, 1bit -> Blue
+        # 4 px = 1byte = char
         iter_byte = iter(output_string)
         for bits in iter_byte:
 
@@ -43,8 +45,7 @@ def write_byteediting(image_file, output_string, msg):
         rgb.save("steganic_output.png", "PNG")
         im.close()
     except Exception as e:
-        input("Error, Press enter to quit the program...")
-        print(e)
+        print(f"{Fore.LIGHTRED_EX}Error : unknown file {Fore.RESET}")
 
 def write_coloredit(file, output_string, msg):
     try:
@@ -55,7 +56,8 @@ def write_coloredit(file, output_string, msg):
 
         write_x = 0
         write_y = 0
-
+        #1px = 1b
+        #8px = 1 byte = 1 char
         for bit in output_string:
 
             current_color = rgb.getpixel((write_x, write_y))
@@ -72,6 +74,7 @@ def write_coloredit(file, output_string, msg):
                 rgb.putpixel((write_x, write_y), new_color)
                 write_x += 1
                 write_y += 1
+
             if write_x >= width:
 
                 write_x = 0
@@ -86,5 +89,4 @@ def write_coloredit(file, output_string, msg):
         rgb.save("steganic_output.png", "PNG")
         im.close()
     except Exception as e:
-        input("Error, Press enter to quit the program...")
-        print(e)
+        print(f"{Fore.LIGHTRED_EX}Error : unknown file {Fore.RESET}")

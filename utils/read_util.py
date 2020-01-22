@@ -1,4 +1,5 @@
 from PIL import Image
+from colorama import Fore, init, Back
 
 def pxreadlength(image_file):
     try:
@@ -10,8 +11,7 @@ def pxreadlength(image_file):
         im.close()
         return x * 4
     except FileNotFoundError as e:
-        input("Error, Press enter to quit the program...")
-        print(e)
+        pass
     except Exception as e:
         input("Error, Press enter to quit the program...")
         print(e)
@@ -26,8 +26,7 @@ def coloredit_pxreadlength(image_file):
         im.close()
         return x * 8
     except FileNotFoundError as e:
-        input("Error, Press enter to quit the program...")
-        print(e)
+        pass
     except Exception as e:
         input("Error, Press enter to quit the program...")
         print(e)

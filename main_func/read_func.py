@@ -27,7 +27,7 @@ def read_coloredit(msg_length, file):
         print(f"{Fore.RESET}")
         print(f"{Fore.LIGHTYELLOW_EX}[.] Successfully decoded.{Fore.RESET}")
     except Exception as e:
-        print(e)
+        print(f"{Fore.LIGHTRED_EX}Error : unknown file {Fore.RESET}")
 
 def read_byteediting(msg_length, file):
     try:
@@ -54,5 +54,5 @@ def read_byteediting(msg_length, file):
                 pass
         print(f"{Fore.RESET}")
         print(f"{Fore.LIGHTYELLOW_EX}[.] Successfully decoded.{Fore.RESET}")
-    except Exception as e:
-        print(e)
+    except FileNotFoundError as e:
+        print(f"{Fore.LIGHTRED_EX}Error : unknown file {Fore.RESET}")

@@ -1,4 +1,5 @@
 from PIL import Image
+from colorama import Fore, init, Back
 
 def pxwritelength(image_file, msg):
     try:
@@ -11,8 +12,7 @@ def pxwritelength(image_file, msg):
         im.close()
         return "steganic_temp_deleteafter.png"
     except Exception as e:
-        input("Error, Press enter to quit the program...")
-        print(e)
+        pass
 
 def message_to_bytearray(msg):
     output_string = ""
@@ -23,4 +23,4 @@ def message_to_bytearray(msg):
             output_string += bin_char_changed
         return output_string
     except:
-        print("Error")
+        pass

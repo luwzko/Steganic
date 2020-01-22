@@ -29,7 +29,7 @@ def banner():
         :::: ::      ::     :: ::::   ::: ::::  ::   :::   ::   ::   ::   ::: :::
         :: : :       :     : :: ::    :: :: :    :   : :  ::    :   :     :: :: :
                                                                                                         {Fore.RESET}
-        \t\t\t{Back.RED}{Fore.BLACK} }}-- Written by luckoGH --{{ {Back.RESET}{Fore.RESET}
+        \t\t\t -- Written by luckoGH --
         {Fore.LIGHTBLUE_EX}
         !> ;ByteEditing mode writes bits of message to B and G colors
         !> ;Coloredit mode writes color based on bits of message
@@ -57,7 +57,7 @@ def optparse_setup():
         return mode, file, msg
 
 def steganic(mode, file, msg):
-    if mode == "Write;Coloredit":
+    if mode.lower() == "Write;Coloredit".lower():
         banner()
         print(f"{Fore.LIGHTYELLOW_EX}[+] Checking Size of message...{Fore.RESET}")
         print(f"{Fore.LIGHTYELLOW_EX}[+] Done... Good")
@@ -74,7 +74,7 @@ def steganic(mode, file, msg):
             print(f"{Fore.LIGHTRED_EX} Error, message length greater than {max_msg_len}.{Fore.RESET}")
             exit(0)
 
-    elif mode == "Write;ByteEditing":
+    elif mode.lower() == "Write;ByteEditing".lower():
         banner()
         print(f"{Fore.LIGHTYELLOW_EX}[+] Checking Size of message...{Fore.RESET}")
         print(f"{Fore.LIGHTYELLOW_EX}[+] Done... Good")
@@ -91,28 +91,29 @@ def steganic(mode, file, msg):
             print(f"{Fore.LIGHTRED_EX} Error, message length greater than {max_msg_len}.{Fore.RESET}")
             exit(0)
 
-    elif mode == "Read;ByteEditing":
+    elif mode.lower() == "Read;ByteEditing".lower():
         banner()
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Decoding...{Fore.RESET}")
+
         msg_length = pxreadlength(file)
+        print(f"{Fore.LIGHTYELLOW_EX}[+] Decoding...{Fore.RESET}")
         read_byteediting(msg_length, file)
 
-
-    elif mode == "Read;Coloredit":
+    elif mode.lower() == "Read;Coloredit".lower():
         banner()
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Decoding...{Fore.RESET}")
 
         msg_length = coloredit_pxreadlength(file)
+        print(f"{Fore.LIGHTYELLOW_EX}[+] Decoding...{Fore.RESET}")
         read_coloredit(msg_length, file)
 
     else:
         print(f"""{Fore.LIGHTRED_EX}
- <#@ ERROR @#>
-[!]Please choose a mode:
-  (1.)Write;Coloredit
-  (2.)Read;Coloredit
-  (3.)Write;ByteEditing
-  (4.)Read;ByteEditing{Fore.RESET}""")
+        Error : unknown mode
+        [!]Please choose a mode:
+            (1.)Write;Coloredit
+            (2.)Read;Coloredit
+            (3.)Write;ByteEditing
+            (4.)Read;ByteEditing
+        {Fore.RESET}""")
         exit()
 
 init()
