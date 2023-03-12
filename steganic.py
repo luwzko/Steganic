@@ -1,121 +1,59 @@
-try:
-    from colorama import Fore, init, Back
-    pass
-except ImportError:
-    print("[-] Install Colorama using pip or pip3...")
-from main_func.write_func import *
-from main_func.read_func import *
-from utils.write_util import *
-from utils.read_util import *
-from max_msg_length import *
-import optparse
-import os
-try:    from PIL import *
-except ImportError:
-    print(f"{Fore.RED}[-] Install Pillow (PIL) using pip or pip3...{Fore.RESET}")
+from classes import byteedit, coloreedit, utilities, settings
+from colorama import Fore, init, Back
 
-def banner():
-    print(
-        f"""
-        {Fore.LIGHTGREEN_EX}
-         @@@@@@   @@@@@@@  @@@@@@@@   @@@@@@@@   @@@@@@   @@@  @@@  @@@   @@@@@@@
-        @@@@@@@   @@@@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@  @@@@ @@@  @@@  @@@@@@@@
-        !@@         @@!    @@!       !@@        @@!  @@@  @@!@!@@@  @@!  !@@
-        !@!         !@!    !@!       !@!        !@!  @!@  !@!!@!@!  !@!  !@!
-        !!@@!!      @!!    @!!!:!    !@! @!@!@  @!@!@!@!  @!@ !!@!  !!@  !@!
-         !!@!!!     !!!    !!!!!:    !!! !!@!!  !!!@!!!!  !@!  !!!  !!!  !!!
-             !:!    !!:    !!:       :!!   !!:  !!:  !!!  !!:  !!!  !!:  :!!
-            !:!     :!:    :!:       :!:   !::  :!:  !:!  :!:  !:!  :!:  :!:
-        :::: ::      ::     :: ::::   ::: ::::  ::   :::   ::   ::   ::   ::: :::
-        :: : :       :     : :: ::    :: :: :    :   : :  ::    :   :     :: :: :
-                                                                                                        {Fore.RESET}
-        \t\t\t -- Written by luckoGH --
-        {Fore.LIGHTBLUE_EX}
-        !> ;ByteEditing mode writes bits of message to B and G colors
-        !> ;Coloredit mode writes color based on bits of message
-        {Fore.CYAN}!> Steganic can only read messages written by Steganic.
-                                                     {Fore.RESET}""")
+class Steganic:
+    def __init__(self):
+        self.color_editor = coloreedit.ColorEdit()
+        self.byte_editor = byteedit.ByteEdit()
 
-def optparse_setup():
-    parser = optparse.OptionParser(f"usage> {os.path.basename(__file__)} -m <mode> -f <file> --msg <message>")
-    parser.add_option("-m", dest="mode", type="string", help="specify mode for Steganic program.")
-    parser.add_option("-f", dest="file", type="string", default="steganic_output.png", help="specify file for Steganic program.")
-    parser.add_option("--msg", dest="msg", type="string", default="SteganicDefault", help="specify message to write for Steganic program.")
-    (options, args) = parser.parse_args()
-    if (options.mode == None):
-        print(parser.usage)
-        exit(0)
-    else:
+        self.settings_manager = settings.Settings()
+        self.utils = utilities.Utils()
+        
+    def main(self):
+        self.utils.print_banner()
 
-        script_path = os.path.dirname(os.path.abspath(__file__))
-        os.chdir(script_path)
+        cmd = ""
 
-        mode = options.mode
-        file = options.file
-        msg = options.msg
+        while (cmd not in ["quit", "exit"]):
 
-        return mode, file, msg
+            cmd = str(input(self.utils.console))
+            arguments = cmd.split(" ")
+            
+            match arguments[0]:
+                case "set":
+                    match arguments[1]:
+                        case "input_img":  self.settings_manager.set_input_img(arguments[2])
+                        case "output_img": self.settings_manager.set_output_img(arguments[2])
+                        case "mode":       self.settings_manager.set_mode(arguments[2])
+                        case "msg":        self.settings_manager.set_msg(arguments[2])
+                case "list":
+                    self.utils.list_setts(self.settings_manager)
+                case "detect":
+                    self.utils.detect(arguments[1])
+                case "run":
+                    if self.settings_manager.all_set():
+                        match self.settings_manager.get_mode():
+                            case "ColorEdit":
+                                self.color_editor.set_input_img(self.settings_manager.get_input_img())
+                                self.color_editor.set_output_img(self.settings_manager.get_output_img())
+                                match arguments[1]:
+                                    case "Write":
+                                        self.color_editor.write(self.settings_manager.get_msg())
+                                    case "Read":
+                                        self.color_editor.read()
 
-def steganic(mode, file, msg):
-    if mode.lower() == "Write;Coloredit".lower():
-        banner()
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Checking Size of message...{Fore.RESET}")
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Done... Good")
-        max_msg_len = get_maximum_msg_length(file)
-
-        if len(msg) <= max_msg_len:
-
-            file_to_continue = pxwritelength(file, msg)
-            output_string = message_to_bytearray(msg)
-            write_coloredit(file_to_continue, output_string, msg)
-
-        elif len(msg) >= max_msg_len:
-
-            print(f"{Fore.LIGHTRED_EX} Error, message length greater than {max_msg_len}.{Fore.RESET}")
-            exit(0)
-
-    elif mode.lower() == "Write;ByteEditing".lower():
-        banner()
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Checking Size of message...{Fore.RESET}")
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Done... Good")
-        max_msg_len = get_maximum_msg_length(file)
-
-        if len(msg) <= (max_msg_len * 2):
-
-            file_to_continue = pxwritelength(file, msg)
-            output_string = message_to_bytearray(msg)
-            write_byteediting(file_to_continue, output_string, msg)
-
-        elif len(msg) >= max_msg_len:
-
-            print(f"{Fore.LIGHTRED_EX} Error, message length greater than {max_msg_len}.{Fore.RESET}")
-            exit(0)
-
-    elif mode.lower() == "Read;ByteEditing".lower():
-        banner()
-
-        msg_length = pxreadlength(file)
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Decoding...{Fore.RESET}")
-        read_byteediting(msg_length, file)
-
-    elif mode.lower() == "Read;Coloredit".lower():
-        banner()
-
-        msg_length = coloredit_pxreadlength(file)
-        print(f"{Fore.LIGHTYELLOW_EX}[+] Decoding...{Fore.RESET}")
-        read_coloredit(msg_length, file)
-
-    else:
-        print(f"""{Fore.LIGHTRED_EX}
-        Error : unknown mode
-        [!]Please choose a mode:
-            (1.)Write;Coloredit
-            (2.)Read;Coloredit
-            (3.)Write;ByteEditing
-            (4.)Read;ByteEditing
-        {Fore.RESET}""")
+                            case "ByteEdit":
+                                self.byte_editor.set_input_img(self.settings_manager.get_input_img())
+                                self.byte_editor.set_output_img(self.settings_manager.get_output_img())
+                                match arguments[1]:
+                                    case "Write":
+                                        self.byte_editor.write(self.settings_manager.get_msg())
+                                    case "Read":
+                                        self.byte_editor.read()
+                
+                case "help":
+                    self.utils.print_help()
         exit()
-
-init()
-setup_args = optparse_setup()
-steganic(setup_args[0], setup_args[1], setup_args[2])
+if __name__ == "__main__":
+    steganic = Steganic()
+    steganic.main()
