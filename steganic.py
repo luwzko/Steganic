@@ -10,13 +10,14 @@ class Steganic:
         self.utils = utilities.Utils()
         
     def main(self):
+        init()
         self.utils.print_banner()
 
         cmd = ""
 
         while (cmd not in ["quit", "exit"]):
-
-            cmd = str(input(self.utils.console))
+            
+            print(self.utils.console, end=" "); cmd = str(input())
             arguments = cmd.split(" ")
             
             match arguments[0]:
