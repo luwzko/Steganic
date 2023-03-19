@@ -1,5 +1,5 @@
 try:
-    from colorama import Fore, init, Back
+    from colorama import Fore, Style, Back
 except ImportError:
     print("[-] Install Colorama using pip or pip3...")
 try:
@@ -49,7 +49,7 @@ class Utils:
         {Fore.CYAN}[+]{Fore.LIGHTBLUE_EX} help
         {Fore.CYAN}[+]{Fore.LIGHTBLUE_EX} run
     {Fore.RESET}"""
-        self.console = f"{Back.LIGHTCYAN_EX}steganic{Back.LIGHTBLUE_EX}>{Back.RESET} "
+        self.console = f"{Fore.BLACK}{Back.LIGHTCYAN_EX}steganic{Back.LIGHTBLUE_EX}>{Style.RESET_ALL} "
 
     def print_banner(self):
         print(self.banner)
