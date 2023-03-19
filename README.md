@@ -19,3 +19,11 @@ bad project structure, redudant code, not optimized
         - run Read/Write
         - list
         - help
+#Requirements for running Steganic:
+- colorama 0.4.5 version
+- Pillow 9.4.0 version
+    # Installing with requirements.txt
+        - pip install -r requirements.txt
+    # Manually installing
+        - pip install colorama==0.4.5
+        - pip install Pillow==9.4.0
